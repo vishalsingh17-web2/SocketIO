@@ -25,20 +25,23 @@ io.on("connection", (socket) => {
         let targetId = msg.targetId;
         if (clients[targetId]) {
             clients[targetId].emit("message", msg);
-            const registrationToken = msg.fcmToken;
-
-            const message = {
-                data:{
-                    "sourceId": msg.sourceId,
-                    "time": msg.time,
-                },
-                notification: {
-                    title: msg.sendersName,
-                    body: msg.message,
-                },
-                token: registrationToken
-            };
-            admin.messaging().send(message)
+            try{
+                const registrationToken = msg.fcmToken;
+                const message = {
+                    data:{
+                        "sourceId": msg.sourceId,
+                        "time": msg.time,
+                    },
+                    notification: {
+                        title: msg.sendersName,
+                        body: msg.message,
+                    },
+                    token: registrationToken
+                };
+                admin.messaging().send(message)
+            }catch(e){
+                console.log("FCM Token error: "+e);
+            }
         }
     });
     socket.on('typing', (typing) => {
