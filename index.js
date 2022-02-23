@@ -38,9 +38,6 @@ io.on("connection", (socket) => {
                 },
                 token: registrationToken
             };
-
-            // Send a message to the device corresponding to the provided
-            // registration token.
             admin.messaging().send(message)
         }
     });
