@@ -18,7 +18,7 @@ var clients = {};
 io.on("connection", (socket) => {
     socket.on("signin", (id) => {
         clients[id] = socket;
-        // console.log(clients[]);
+        console.log(id);
     });
     socket.on("message", (msg) => {
         console.log(msg);
